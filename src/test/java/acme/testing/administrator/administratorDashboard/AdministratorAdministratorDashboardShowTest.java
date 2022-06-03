@@ -15,6 +15,7 @@ public class AdministratorAdministratorDashboardShowTest extends TestHarness {
 		super.clickOnMenu("Administrator", "Administrator Dashboard");
 		super.checkCurrentUrl("http://localhost:8081/acme-toolkits-22.1/administrator/administrator-dashboard/show");
 		super.checkNotPanicExists();
+		super.checkFormExists();
 		
 		super.signOut();
 	}

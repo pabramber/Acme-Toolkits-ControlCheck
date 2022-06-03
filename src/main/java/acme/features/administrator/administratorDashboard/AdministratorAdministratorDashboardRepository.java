@@ -5,11 +5,27 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import acme.entities.systemConfiguration.SystemConfiguration;
 import acme.framework.repositories.AbstractRepository;
 
 @Repository
 public interface AdministratorAdministratorDashboardRepository extends AbstractRepository {
 
+	@Query("SELECT COUNT(*) FROM Fuppo c")
+	double findTotalNumberOfFuppos();
+	
+	@Query("SELECT COUNT(*) FROM Invention i WHERE i.inventionType = 'COMPONENT'")
+	double findTotalNumberOfComponents();
+	
+	@Query("SELECT c.quantity.currency, avg(c.quantity.amount), stddev(c.quantity.amount), min(c.quantity.amount), max(c.quantity.amount) FROM Fuppo c GROUP BY c.quantity.currency")
+	List<Object[]> findMetrics();
+
+	@Query("SELECT c FROM SystemConfiguration c")
+	SystemConfiguration getSystemConfiguration();
+	
+	
+	
+	
 	
 	@Query("select count(c) from Invention c where c.inventionType=acme.entities.inventions.InventionType.COMPONENT")
 	Double findNumberComponents();

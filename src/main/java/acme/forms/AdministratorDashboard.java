@@ -19,6 +19,14 @@ public class AdministratorDashboard implements Serializable{
 		protected static final long	serialVersionUID	= 1L;
 
 		// Attributes -------------------------------------------------------------
+		
+		double						ratioOfComponentWithFuppo;
+		
+		Map<String,Double>			averageQuantityOfFuppoByCurrency;
+		Map<String,Double>			deviationQuantityOfFuppoByCurrency;
+		Map<String,Double>			minimumQuantityOfFuppoByCurrency;
+		Map<String,Double>			maximumQuantityOfFuppoByCurrency;
+		
 		Double						         numberComponents;
 		
 	    Map<Pair<String, String>, Double>    averageRetailPriceComponents;

@@ -1,9 +1,12 @@
 package acme.features.administrator.administratorDashboard;
 
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
@@ -33,6 +36,37 @@ public class AdministratorAdministratorDashboardShowService implements AbstractS
 	@Override
 	public AdministratorDashboard findOne(final Request<AdministratorDashboard> request) {
 		assert request != null;
+		
+		final double totalNumberOfFuppos = this.repository.findTotalNumberOfFuppos();
+		final double totalNumberOfComponents = this.repository.findTotalNumberOfComponents();
+		final double ratioOfComponentWithFuppo = totalNumberOfFuppos / totalNumberOfComponents * 100;
+		
+		final Map<String, Double> averageQuantityOfFuppoByCurrency = new HashMap<>();
+		final Map<String, Double> deviationQuantityOfFuppoByCurrency = new HashMap<>();
+		final Map<String, Double> minimumQuantityOfFuppoByCurrency = new HashMap<>();
+		final Map<String, Double> maximumQuantityOfFuppoByCurrency = new HashMap<>();
+		final List<Object[]> metrics = this.repository.findMetrics();
+		for (final Object[] row : metrics) {
+			final String currency = (String) row[0];
+			final Double avgBudget = (Double) row[1];
+			final Double stdevBudget = (Double) row[2];
+			final Double minBudget = (Double) row[3];
+			final Double maxBudget = (Double) row[4];
+			
+			averageQuantityOfFuppoByCurrency.put(currency, avgBudget);
+			deviationQuantityOfFuppoByCurrency.put(currency, stdevBudget);
+			minimumQuantityOfFuppoByCurrency.put(currency, maxBudget);
+			maximumQuantityOfFuppoByCurrency.put(currency, minBudget);
+		}
+		
+		final List<String> currencies = Arrays.stream(this.repository.getSystemConfiguration().getAcceptedCurrencies().split(";")).map(String::trim).collect(Collectors.toList());
+		for (final String currency: currencies) {
+			averageQuantityOfFuppoByCurrency.computeIfAbsent(currency, c-> averageQuantityOfFuppoByCurrency.put(c, 0.));
+			deviationQuantityOfFuppoByCurrency.computeIfAbsent(currency, c-> deviationQuantityOfFuppoByCurrency.put(c, 0.));
+			minimumQuantityOfFuppoByCurrency.computeIfAbsent(currency, c-> minimumQuantityOfFuppoByCurrency.put(c, 0.));
+			maximumQuantityOfFuppoByCurrency.computeIfAbsent(currency, c-> maximumQuantityOfFuppoByCurrency.put(c, 0.));
+		}
+		
 		
 		final Double						         numberComponents = this.repository.findNumberComponents();
 		
@@ -127,7 +161,13 @@ public class AdministratorAdministratorDashboardShowService implements AbstractS
 	    	maximumBudgetPatronage.put(PatronageStatus.values()[Integer.parseInt(maximumPatronages[0])], Double.parseDouble(maximumPatronages[1]));
 	    }
 	    
-
+	    
+		result.setRatioOfComponentWithFuppo(ratioOfComponentWithFuppo);
+		result.setAverageQuantityOfFuppoByCurrency(averageQuantityOfFuppoByCurrency);
+		result.setDeviationQuantityOfFuppoByCurrency(deviationQuantityOfFuppoByCurrency);
+		result.setMaximumQuantityOfFuppoByCurrency(maximumQuantityOfFuppoByCurrency);
+		result.setMinimumQuantityOfFuppoByCurrency(minimumQuantityOfFuppoByCurrency);
+	    
 	    result.setNumberComponents(numberComponents);
 	    
 	    result.setAverageRetailPriceComponents(averageRetailPriceComponents);
@@ -157,6 +197,13 @@ public class AdministratorAdministratorDashboardShowService implements AbstractS
 		assert entity != null;
 		assert model != null;
 		
+		Set<String> currencies;
+		
+		currencies = entity.getMinimumQuantityOfFuppoByCurrency().keySet();
+		
+		request.unbind(entity, model, "ratioOfComponentWithFuppo", "averageQuantityOfFuppoByCurrency", "deviationQuantityOfFuppoByCurrency", "maximumQuantityOfFuppoByCurrency", "minimumQuantityOfFuppoByCurrency");
+		model.setAttribute("currencies", currencies);
+		
 		model.setAttribute("numberComponents", entity.getNumberComponents());
 		model.setAttribute("averageRetailPriceComponents", entity.getAverageRetailPriceComponents());
 		model.setAttribute("deviationRetailPriceComponents", entity.getDeviationRetailPriceComponents());
@@ -174,8 +221,6 @@ public class AdministratorAdministratorDashboardShowService implements AbstractS
 		model.setAttribute("deviationBudgetPatronage", entity.getDeviationBudgetPatronage());
 		model.setAttribute("minimumBudgetPatronage", entity.getMinimumBudgetPatronage());
 		model.setAttribute("maximumBudgetPatronage", entity.getMaximumBudgetPatronage());
-	
-	
 	
 	}
 

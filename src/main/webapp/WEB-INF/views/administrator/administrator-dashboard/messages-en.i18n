@@ -1,3 +1,12 @@
+administrator.dashboard.form.title.fuppos = Fuppos
+
+administrator.dashboard.form.label.ratio-component-fuppo = Ratio of components with fuppo
+
+administrator.dashboard.form.label.avg-quantity-fuppo-by-currency = Average
+administrator.dashboard.form.label.deviation-quantity-fuppo-by-currency = Deviation
+administrator.dashboard.form.label.max-quantity-fuppo-by-currency = Minimum
+administrator.dashboard.form.label.min-quantity-fuppo-by-currency = Maximum
+
 administrator.dashboard.form.title.components = Components
 
 administrator.dashboard.form.label.number-components = Number of Components

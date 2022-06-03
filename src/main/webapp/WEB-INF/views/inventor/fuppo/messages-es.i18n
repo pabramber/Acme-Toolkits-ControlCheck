@@ -1,0 +1,30 @@
+inventor.fuppo.list.label.code = Código
+inventor.fuppo.list.label.name = Nombre
+inventor.fuppo.list.label.statement = Descripción
+
+inventor.fuppo.list.button.create = Crear
+
+inventor.fuppo.form.label.code = Código
+inventor.fuppo.form.label.name = Nombre
+inventor.fuppo.form.label.statement = Descripción
+inventor.fuppo.form.label.creationMoment = Fecha de creación
+inventor.fuppo.form.label.periodStart = Fecha de comienzo
+inventor.fuppo.form.label.periodEnd = Fecha de terminación
+inventor.fuppo.form.label.moreInfo = Más información
+inventor.fuppo.form.label.quantity = Presupuesto
+inventor.fuppo.form.label.component.code = Código del componente
+
+inventor.fuppo.form.button.update = Actualizar
+inventor.fuppo.form.button.delete = Eliminar
+inventor.fuppo.form.button.create = Crear
+
+inventor.fuppo.form.error.invalid = Código no existente
+inventor.fuppo.form.error.duplicated = Este componente ya tiene un fuppo
+inventor.fuppo.form.error.no-permission = No eres el dueño
+inventor.fuppo.form.error.invalid-type = No es un componente
+inventor.fuppo.form.error.not-today = La fecha del código no se corresponde con hoy
+inventor.fuppo.form.error.wrong-code-date = La fecha del código no se corresponde con la de su creación
+inventor.fuppo.form.error.wrong-period-start = La fecha de inicio debe ser al menos un mes posterior al día de creación
+inventor.fuppo.form.error.wrong-period-end = La fecha de fin debe ser al menos una semana posterior a la fecha de inicio
+inventor.fuppo.form.error.negative-quantity = La cantidad de dinero debe ser positivo
+inventor.fuppo.form.error.non-accepted-currency = La divisa no está aceptada por el sistema

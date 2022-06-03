@@ -63,6 +63,7 @@ master.menu.consumer.favourite-link = Favourite link
 # master.menu.inventor #########################################################
 
 master.menu.inventor = Inventor
+master.menu.inventor.fuppo.list = List my fuppos
 master.menu.inventor.toolkits.list-toolkits = List my toolkits
 master.menu.inventor.invention.list-tools = List my tools
 master.menu.inventor.invention.list-components = List my components
